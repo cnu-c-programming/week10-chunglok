@@ -1,35 +1,37 @@
 #include <stdio.h>
+#include <string.h>
 
 struct Student{
     char name[10];
     int score;
+    struct Student* func;
 };
-void add(struct Student s){
-    void *p = malloc(sizeof(struct Student));
+struct Student* add(struct Student* add, char* name, int score){
+    struct Student* info = malloc(sizeof(struct Student));
+    strcpy(info->name, add->name);
+    info->score = add->score;
+    return info;
 }
-void delete(struct Student s, void *p){
-    if(strcmp(p, s.name) == 0){
-        free(p);
+struct Student* delete(struct Student* delete, char* name){
+    struct Student* info = delete;
+    while(info != NULL){
+        if(info->name == delete->name){
+            free(info);
+            return NULL;
+        }
+        return info;
     }
 }
-void print(struct Student s){
-    printf("%s %d\n", s.name, s.score);
+struct Student* print(struct Student* print){
+    struct Student* info = print;
+    printf("%s %d\n", info->name, info->score);
 }
-void quit(struct Student s){
-    exit(0);
-}
-int main() {
-    struct Student s;
-    char func[10];
-    scanf("%9s %9s %d", func, s.name, &s.score);
-    if (strcmp(func, "add") == 0) {
-        add(s);
-    } else if (strcmp(func, "delete") == 0) {
-        delete(s, NULL);
-    } else if (strcmp(func, "print") == 0) {
-        print(s);
-    } else if (strcmp(func, "quit") == 0) {
-        quit(s);
+struct Student* quit(struct Student* quit){
+    struct Student* end = quit;
+    while(end != NULL){
+        struct Student* temp = end;
+        end = end->func;
+        free(temp);
     }
-    return 0;
+    
 }
